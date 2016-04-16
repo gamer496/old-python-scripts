@@ -27,7 +27,7 @@ e.value='''
 
 final_list=[]
 
-def fun(url,ids):
+def fun(url,ids,flag):
 
 
 
@@ -82,12 +82,15 @@ def fun(url,ids):
 			final_list.append(element_dict)
 			driver.close()
 		except:
-			not_file.write(id_element+"\n")
+			if flag:
+				not_file.write(id_element+"\n")
+			else:
+				pass
 	display.stop()
 
 
 
-def run_drivers(url,path,ids):
+def run_drivers(url,path,ids,flag=True):
 
 	some_list=[]
 	k=ids.__len__()
@@ -97,7 +100,7 @@ def run_drivers(url,path,ids):
 	j=0
 
 	for i in range(0,5):
-		t=threading.Thread(target=fun,args=[url,ids[j:j+step]])
+		t=threading.Thread(target=fun,args=[url,ids[j:j+step],flag])
 		j+=step
 		threads.append(t)
 		t.start()
@@ -107,8 +110,20 @@ def run_drivers(url,path,ids):
 
 def main_fun(url,path):
 	ids=extract_ids.fun(path)
-	run_drivers(url,path,ids[:5])
+	run_drivers(url,path,ids)
+	check_not_processed(url,path)
 	end()
+
+
+
+def check_not_processed(url,path):
+	not_file.close()
+	fil=open("not_done.txt","r")
+	ids=[]
+	for x in fil.readlines():
+		x=x.rstrip("\n")
+		ids.append(x)
+	run_drivers(url,path,ids,False)
 
 def end():
 	# file_json.close()
@@ -120,7 +135,7 @@ def end():
 	with open("data.csv","w") as file:
 		csv_file=csv.writer(file)
 		for item in data:
-			csv_file.writerow([item["ID"],item["Name"],item["Gender"],item["Fathers Name"].encode('utf-8')])
+			csv_file.writerow([item["ID"].encode('utf-8'),item["Name"].encode('utf-8'),item["Gender"].encode('utf-8'),item["Fathers Name"].encode('utf-8')])
 	choice=raw_input("Remove temporary files?[yn]\n")
 	if choice.lower()=='y':
 		os.remove("temp.txt")
