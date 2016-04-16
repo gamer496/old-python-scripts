@@ -8,7 +8,7 @@ def fun(path):
 		ids=[]
 		for line in f.readlines():
 			line=line.rstrip("\n")
-			if line.isalnum() and line.__contains__("A"):
+			if line.isalnum() and line.__len__()>6:
 				ids.append(line)
 		os.remove(path+".txt")
 		return ids
