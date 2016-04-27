@@ -1,5 +1,6 @@
 import extract_pdf
 import os
+import re
 
 def fun(path):
 	try:
@@ -8,7 +9,7 @@ def fun(path):
 		ids=[]
 		for line in f.readlines():
 			line=line.rstrip("\n")
-			if line.isalnum() and line.__len__()>6:
+			if re.match('^[a-zA-Z0-9/]+$',line) and line.__len__()>6:
 				ids.append(line)
 		os.remove(path+".txt")
 		return ids

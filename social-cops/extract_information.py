@@ -110,6 +110,7 @@ def run_drivers(url,path,ids,flag=True):
 
 def main_fun(url,path):
 	ids=extract_ids.fun(path)
+	# print ids,ids.__len__()
 	run_drivers(url,path,ids)
 	check_not_processed(url,path)
 	end()
