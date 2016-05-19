@@ -1,0 +1,7 @@
+BeautifulSoup==3.2.1
+EasyProcess==0.2.2
+PyVirtualDisplay==0.2
+argparse==1.2.1
+requests==2.10.0
+selenium==2.53.2
+wsgiref==0.1.2
